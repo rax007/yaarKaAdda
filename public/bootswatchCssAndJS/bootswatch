@@ -1,0 +1,28 @@
+
+var content = '';
+
+
+content += '<style type="text/css">';
+content += ' #md-large-widget-content{ display:inline-block; font-family:Arial; text-align:left;}';
+content += ' .md-wg-deal-image {width:100%; margin-bottom: 5px;} ';
+content += ' .md-wg-timer-block { font-size: 11px; color:#727a80; margin-top: 5px;} ';
+content += ' .mdWidgetDigit {margin-right: 1px; display:inline-block;} ';
+content += ' .mdWidgetWord {margin-right: 5px; display:inline-block;} ';
+content += ' .md-wg-deal-link {font-weight: bold; font-size:15px; color:#57207c; text-decoration: none; line-height: 17px;}' ;
+content += ' .md-wg-deal-link:hover {color:#f05028;}' ;
+content += '</style>'
+
+content += '<div id="md-large-widget-content" style="width:300px;" >';
+content += '<a href="http://www.mightydeals.com/deal/fluid-mask.html?ref=bootswatch" class=""  >';
+content += '		<img alt="" class="md-wg-deal-image" src="http://cdn.mightydeals.com/teaser-images/1578/FluidMask3.png" /></a>';
+      
+				
+	
+content += '</div>';
+
+var mdWidgetContainer = document.getElementById('md-large-widget');
+if(mdWidgetContainer)
+  mdWidgetContainer.innerHTML = content;
+
+
+
