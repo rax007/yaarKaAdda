@@ -10,12 +10,12 @@ var URIFriendDBString = 'mongodb://localhost/friend';
 var friendDBConn = mongoose.createConnection(URIFriendDBString);
 
 friendDBConn.on('error',function(err){
-    console.log('err', err);
+    console.log('error occurred during database connection: ', err);
 });
 
 
 friendDBConn.once('open', function () {
-    console.log('Database connection established!');
+    console.log('Friend Database connection established!');
 });
 
 

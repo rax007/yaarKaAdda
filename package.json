@@ -1,0 +1,11 @@
+
+{
+    "name": "facebook",
+    "version": "0.0.1",
+    "description": "A project creating socail site",
+    "main":"index.html",
+    "dependencies": {
+        "express": "*"
+    },
+    "engine": "node >=0.6.x"
+}
