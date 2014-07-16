@@ -2,15 +2,45 @@
 var express = require('express'),
     friendData = require('./friendData'),
     path = require('path'),
-    login = require('./login')
+    login = require('./login'),
+    fs = require('fs'),
     bodyParser = require('body-parser');
+
 var app = express();
+
+var session = false;
 
 app.use(bodyParser());
 
 app.use(express.static(path.join(__dirname+"/..","public")));
 
 
+
+app.post('/authUser', function (req, res) {
+
+        login.getloginDetails( function (err, result) {
+
+            if (err) {
+//                console.log('err: ', err);
+                res.send(400, err);
+            }
+            else {
+
+                for (var obj in result) {
+                    if (result[obj].email == req.body.email && result[obj].password == req.body.password) {
+                        session = result[obj]._id;
+                        res.send("success", session);
+
+                    }
+                }
+                if(!session)
+                res.send('success');
+
+            }
+        })
+});
+
+//###########################################  FRIENDLIST API  ##################################
 
 //Get all friend list
 app.get('/friend/:id?', function(req, res) {
@@ -80,7 +110,7 @@ app.delete('/friend/:id', function (req, res) {
 //Get all login list
 app.get('/login/:id?', function(req, res) {
 
-    login.getloginDetails(function (errr, result) {
+    login.getloginDetails(function (err, result) {
 
         if(!req.param('id'))
         {
@@ -122,7 +152,7 @@ app.post('/login', function (req, res) {
 
 //update login by id
 app.put('/login/:id', function (req, res) {
-    login.update(req.param('id'), req.body, function (err, result) {
+    login.updatelogin(req.param('id'), req.body, function (err, result) {
         if(err) {
             console.log('err: ',err);
             res.send(400, "Entered wrong ID");
@@ -135,7 +165,7 @@ app.put('/login/:id', function (req, res) {
 
 // login record deleted by ID
 app.delete('/login/:id', function (req, res) {
-    login.deleteRecord(req.param('id'), function (err, result) {
+    login.deleteloginRecord(req.param('id'), function (err, result) {
         if(err) {
             console.log('err: ',err);
             res.send(400, " wrong ID Entered");
@@ -144,8 +174,6 @@ app.delete('/login/:id', function (req, res) {
             res.send(200, result )
     })
 });
-
-
 
 
 app.listen(3000);

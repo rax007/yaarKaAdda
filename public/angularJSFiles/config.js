@@ -1,32 +1,30 @@
 
-//var util = require('../utils/util');
 
 
 //var myApp = angular.module('myApp', ['ngSanitize']);
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngRoute']);
 
 
-//myApp.config(function ($routeProvider) {
-//
-//    $routeProvider
-//    .when('/login',
-//        {
-//            controller: 'userCtrl',
-//            templateUrl: 'user.html'
-//        })
-//    .when('/book',
-//        {
-//            controller: 'bookCtrl',
-//            templateUrl: 'book.html'
-//        })
-//    .when('/admin',
-//        {
-//            controller: 'adminCtrl',
-//            templateUrl:'deshboard.html'
-//        })
-//    .otherwise({redirect: '/'});
-//
-//});
+myApp.config(function ($routeProvider) {
+
+    $routeProvider
+    .when('/dashboard',
+        {
+            templateUrl: 'dashboard.html'
+        })
+    .when('/book',
+        {
+            controller: 'bookCtrl',
+            templateUrl: 'book.html'
+        })
+    .when('/admin',
+        {
+            controller: 'adminCtrl',
+            templateUrl:'dashboard.html'
+        })
+    .otherwise({redirect: '/'});
+
+});
 
 
 /*====Route Provider
@@ -110,15 +108,11 @@ var myApp = angular.module('myApp', []);
 //    });
 //} );
 
-
+//Post Register data
 myApp.controller('addUserCtrl',['$scope','$http',function ($scope, $http ) {
-
-
-//=====================userDataPost==================
 
     $scope.userDataPost = function(){
 
-        console.log('userdatapost');
         var obj = {
             FirstName: $scope.firstName,
             lastName: $scope.lastName,
@@ -143,6 +137,38 @@ myApp.controller('addUserCtrl',['$scope','$http',function ($scope, $http ) {
 
 
 }
+}
+]);
+
+//sign in
+
+myApp.controller('signINCtrl',['$scope','$http', '$location',function ($scope, $http, $location ) {
+
+    $scope.signIN = function(){
+
+        var obj = {
+            email: $scope.emailID,
+            password: $scope.password
+        };
+
+//======================================POST USER DATA===========================
+
+        var webServiceURL = 'http://localhost:3000/authUser';
+
+        var responsePromise = $http.post(webServiceURL, obj);
+
+        responsePromise.success(function (data, status, header, config) {
+            console.log('verifyUser');
+//          $location.replace('deshboard');
+            $location.path('dashboard');
+
+
+        });
+        responsePromise.error(function (data, status, header, config) {
+            alert("web service doesn't work. TRY AGAIN!!!");
+        });
+
+    }
 }
 ]);
 
